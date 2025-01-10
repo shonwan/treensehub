@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase'; // Ensure correct import path
 import { Home, BarChart as IconBarChart, User, History as HistoryIcon, LogOut } from 'lucide-react';
 import { BarChart, Bar, PieChart as RePieChart, Pie, Cell, Tooltip, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from 'recharts';
+import { ClassificationData } from '../types/database';
+import { ChartDataMap } from '../types/database';
 
-interface ClassificationData {
-  id: number;
-  classification: 'Healthy' | 'Unhealthy';
-  created_at: string;
-  location: string;
-}
+interface CustomizedLabelProps { percent: number; x: number; y: number; name: string; }
 
 function Analytics() {
   const { user, signOut } = useAuth();
@@ -29,7 +26,7 @@ function Analytics() {
       const fetchData = async () => {
         try {
           const { data, error } = await supabase
-            .from<ClassificationData>('plant_classifications')
+            .from('plant_classifications')
             .select('*');
 
           if (error) {
@@ -49,7 +46,11 @@ function Analytics() {
             unhealthyScans,
           });
         } catch (error) {
-          console.error('Error fetching data:', error.message);
+          if (error instanceof Error) {
+            console.error('Error fetching data:', error.message);
+          } else {
+            console.error('Error fetching data:', error);
+          }
         }
       };
 
@@ -63,15 +64,14 @@ function Analytics() {
   };
 
   // Prepare data for charts
-  const chartData = data.reduce((acc, item) => {
+  const chartData = data.reduce((acc: ChartDataMap, item) => {
     const date = new Date(item.created_at).toLocaleDateString();
     if (!acc[date]) {
       acc[date] = { date, Healthy: 0, Unhealthy: 0 };
     }
     acc[date][item.classification]++;
     return acc;
-  }, {});
-
+  }, {} as ChartDataMap);
   const formattedChartData = Object.values(chartData);
 
   const pieData = [
@@ -81,10 +81,22 @@ function Analytics() {
 
   const COLORS = ['#00C49F', '#FF8042'];
 
-  const renderCustomizedLabel = ({ percent, x, y, name }) => {
+  const renderCustomizedLabel = ({
+    percent,
+    x,
+    y,
+    name,
+  }: CustomizedLabelProps) => {
     return (
-      <text x={x} y={y} fill="black" textAnchor="middle" dominantBaseline="central">
-        {`${name}: ${(percent * 100).toFixed(0)}%`}
+      <text
+        x={x}
+        y={y}
+        fill="black"
+        textAnchor="middle"
+        dominantBaseline="central"
+      >
+        {" "}
+        {`${name}: ${(percent * 100).toFixed(0)}%`}{" "}
       </text>
     );
   };
@@ -171,7 +183,7 @@ function Analytics() {
             <ResponsiveContainer width="100%" height={300}>
               <RePieChart>
                 <Pie data={pieData} dataKey="value" nameKey="name" cx="50%" cy="50%" outerRadius={100} fill="#8884d8" label={renderCustomizedLabel}>
-                  {pieData.map((entry, index) => (
+                  {pieData.map((_entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Pie>

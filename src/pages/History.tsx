@@ -1,16 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabase'; // Ensure correct import path
 import { Home, BarChart, User, History as HistoryIcon, LogOut } from 'lucide-react';
-
-interface ClassificationData {
-  id: number;
-  classification: 'Healthy' | 'Unhealthy';
-  created_at: string; // Ensure this matches your table's schema
-  image_url: string;
-  location: string;
-}
+import { ClassificationData } from '../types/database';
 
 function History() {
   const { user, signOut } = useAuth();
@@ -28,7 +21,7 @@ function History() {
       const fetchHistory = async () => {
         try {
           const { data, error } = await supabase
-            .from<ClassificationData>('plant_classifications')
+            .from('plant_classifications')
             .select('*')
             .order('created_at', { ascending: sortOrder === 'asc' });
 
@@ -38,7 +31,11 @@ function History() {
 
           setHistory(data);
         } catch (error) {
-          console.error('Error fetching history:', error.message);
+          if (error instanceof Error) {
+            console.error('Error fetching history:', error.message);
+          } else {
+            console.error('Error fetching history:', error);
+          }
         }
       };
 

@@ -1,15 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { Home, BarChart, User, History, LogOut} from 'lucide-react';
-import { supabase } from '../lib/supabase'; // Ensure correct import path
+import { supabase } from '../lib/supabase';
+import { ClassificationData } from '../types/database'; // Ensure correct import path
 
-interface ClassificationData {
-  classification: 'Healthy' | 'Unhealthy';
-  created_at: string; // Ensure this matches your table's schema
-  image_url: string;
-  id: string; // Added an id for the activity key
-}
+
 
 function Dashboard() {
   const { user, signOut } = useAuth();
@@ -31,7 +27,7 @@ function Dashboard() {
       const fetchStats = async () => {
         try {
           const { data, error } = await supabase
-            .from<ClassificationData>('plant_classifications')
+            .from('plant_classifications')
             .select('classification');
 
           if (error) {
@@ -47,7 +43,11 @@ function Dashboard() {
             UnhealthyScans: Unhealthy,
           });
         } catch (error) {
-          console.error('Error fetching stats:', error.message);
+          if (error instanceof Error) {
+            console.error('Error fetching stats:', error.message);
+          } else {
+            console.error('Error fetching stats:', error);
+          }
         }
       };
 
@@ -55,7 +55,7 @@ function Dashboard() {
         try {
           const today = new Date().toISOString().split('T')[0]; // Get today's date
           const { data, error } = await supabase
-            .from<ClassificationData>('plant_classifications')
+            .from('plant_classifications')
             .select('*')
             .gte('created_at', `${today}T00:00:00Z`) // Ensure correct comparison with timestamp
             .lt('created_at', `${today}T23:59:59Z`); // Fetch records for today
@@ -68,14 +68,18 @@ function Dashboard() {
             total: data.length,
           });
         } catch (error) {
-          console.error('Error fetching today\'s scans:', error.message);
+          if (error instanceof Error) {
+            console.error('Error fetching today\'s scans::', error.message);
+          } else {
+            console.error('Error fetching today\'s scans:', error);
+          }
         }
       };
 
       const fetchActivities = async () => {
         try {
           const { data, error } = await supabase
-            .from<ClassificationData>('plant_classifications')
+            .from('plant_classifications')
             .select('*')
             .order('created_at', { ascending: false })
             .limit(5); // Fetch the 5 most recent activities
@@ -86,7 +90,11 @@ function Dashboard() {
 
           setActivities(data);
         } catch (error) {
-          console.error('Error fetching recent activities:', error.message);
+          if (error instanceof Error) {
+            console.error('Error fetching recent activities', error.message);
+          } else {
+            console.error('Error fetching recent activities', error);
+          }
         }
       };
 
