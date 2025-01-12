@@ -57,6 +57,8 @@ function History() {
     currentPage * itemsPerPage
   );
 
+  const totalPages = Math.ceil(filteredHistory.length / itemsPerPage);
+
   const handleLogout = () => {
     signOut();
     navigate('/login');
@@ -87,19 +89,14 @@ function History() {
               <User className="w-5 h-5 mr-3 text-indigo-600" />
               Profile
             </Link>
-            {/* <button className="w-full flex items-center p-2 rounded-md hover:bg-indigo-100 focus:outline-none">
-              <User className="w-5 h-5 mr-3 text-indigo-600" />
-              Profile
-            </button> */}
           </div>
         </div>
         <div className="mt-4">
-        <button
+          <button
             onClick={handleLogout}
             className="w-full flex items-center p-2 rounded-md hover:bg-indigo-100 focus:outline-none text-red-600"
           >
-            {" "}
-            <LogOut className="w-5 h-5 mr-2" /> Sign Out{" "}
+            <LogOut className="w-5 h-5 mr-2" /> Sign Out
           </button>
         </div>
       </div>
@@ -139,21 +136,23 @@ function History() {
           </tbody>
         </table>
         <div className="flex justify-between items-center mt-4">
-          <button
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-            className="p-2 rounded-md bg-gray-200"
-          >
-            Previous
-          </button>
-          <p>Page {currentPage}</p>
-          <button
-            disabled={currentPage === Math.ceil(filteredHistory.length / itemsPerPage)}
-            onClick={() => setCurrentPage(prev => prev + 1)}
-            className="p-2 rounded-md bg-gray-200"
-          >
-            Next
-          </button>
+          {currentPage > 1 && (
+            <button
+              onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+              className="p-2 rounded-md bg-gray-200"
+            >
+              Previous
+            </button>
+          )}
+          <p>Page {currentPage} of {totalPages}</p>
+          {currentPage < totalPages && (
+            <button
+              onClick={() => setCurrentPage(prev => prev + 1)}
+              className="p-2 rounded-md bg-gray-200"
+            >
+              Next
+            </button>
+          )}
         </div>
       </div>
     </div>

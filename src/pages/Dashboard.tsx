@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Home, BarChart, User, History, LogOut} from 'lucide-react';
+import { Home, BarChart, User, History, LogOut } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { ClassificationData } from '../types/database'; // Ensure correct import path
-
-
 
 function Dashboard() {
   const { user, signOut } = useAuth();
@@ -69,7 +67,7 @@ function Dashboard() {
           });
         } catch (error) {
           if (error instanceof Error) {
-            console.error('Error fetching today\'s scans::', error.message);
+            console.error('Error fetching today\'s scans:', error.message);
           } else {
             console.error('Error fetching today\'s scans:', error);
           }
@@ -78,11 +76,14 @@ function Dashboard() {
 
       const fetchActivities = async () => {
         try {
+          const today = new Date().toISOString().split('T')[0];
           const { data, error } = await supabase
             .from('plant_classifications')
             .select('*')
+            .gte('created_at', `${today}T00:00:00Z`)
+            .lt('created_at', `${today}T23:59:59Z`)
             .order('created_at', { ascending: false })
-            .limit(5); // Fetch the 5 most recent activities
+            .limit(5); // Fetch the 5 most recent activities for today
 
           if (error) {
             throw error;
@@ -91,9 +92,9 @@ function Dashboard() {
           setActivities(data);
         } catch (error) {
           if (error instanceof Error) {
-            console.error('Error fetching recent activities', error.message);
+            console.error('Error fetching today\'s activities', error.message);
           } else {
-            console.error('Error fetching recent activities', error);
+            console.error('Error fetching today\'s activities', error);
           }
         }
       };
@@ -107,6 +108,10 @@ function Dashboard() {
   const handleLogout = () => {
     signOut();
     navigate('/login');
+  };
+
+  const navigateToHistory = () => {
+    navigate('/history');
   };
 
   return (
@@ -196,17 +201,17 @@ function Dashboard() {
               <div className="flex items-center">
                 <div className="p-3 rounded-full bg-green-100 text-green-600">
                   <svg
-                    className="w-8 h-8"
+                    className="h-8 w-8 text-green-500"
                     fill="none"
-                    stroke="currentColor"
                     viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
                     <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    ></path>
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                 </div>
                 <div className="ml-4">
@@ -261,11 +266,19 @@ function Dashboard() {
           </div>
         </div>
 
-        {/* Recent Activities */}
+        {/* Today's Activities */}
         <div className="bg-white p-4 shadow-md rounded-lg mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Recent Activities
-          </h2>
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-gray-900">
+              Today's Activities
+            </h2>
+            <button
+              onClick={navigateToHistory}
+              className="text-indigo-600 hover:underline text-sm font-medium"
+            >
+              See All
+            </button>
+          </div>
           <ul>
             {activities.map((activity) => (
               <li

@@ -138,6 +138,7 @@ function Analytics() {
 
   return (
     <div className="min-h-screen flex">
+      {/* Sidebar */}
       <div className="w-64 bg-white p-4 shadow-md flex flex-col">
         <div className="space-y-4 flex-1">
           <div className="text-center mb-8">
@@ -186,6 +187,7 @@ function Analytics() {
         </div>
       </div>
 
+      {/* Main Content*/}
       <div className="flex-1 p-6 bg-gradient-to-br from-blue-50 to-indigo-50">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-900">Analytics</h1>
@@ -201,32 +203,126 @@ function Analytics() {
         </div>
         <div className="grid grid-cols-4 gap-6 mt-4">
           <div className="p-4 bg-white shadow-md rounded-lg">
-            <h3 className="text-sm font-medium text-gray-700">Total Scans</h3>
-            <p className="text-2xl font-semibold text-indigo-600">
-              {metrics.totalScans}
-            </p>
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+                  ></path>
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-500">Total Scans</p>
+                <h3 className="text-2xl font-bold text-indigo-600">
+                  {metrics.totalScans}
+                </h3>
+              </div>
+            </div>
           </div>
           <div className="p-4 bg-white shadow-md rounded-lg">
-            <h3 className="text-sm font-medium text-gray-700">Healthy Scans</h3>
-            <p className="text-2xl font-semibold text-green-600">
-              {metrics.healthyScans}
-            </p>
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-green-100 text-green-600">
+                <svg
+                  className="h-8 w-8 text-green-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-500">Healthy Scans</p>
+                <h3 className="text-2xl font-bold text-green-600">
+                  {metrics.healthyScans}
+                </h3>
+                <p className="text-sm text-gray-400">
+                  {((metrics.healthyScans / metrics.totalScans) * 100).toFixed(
+                    1
+                  )}
+                  % of total
+                </p>
+              </div>
+            </div>
           </div>
           <div className="p-4 bg-white shadow-md rounded-lg">
-            <h3 className="text-sm font-medium text-gray-700">
-              Unhealthy Scans
-            </h3>
-            <p className="text-2xl font-semibold text-red-600">
-              {metrics.unhealthyScans}
-            </p>
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-red-100 text-red-600">
+                <svg
+                  className="w-8 h-8"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-500">Unhealthy Scans</p>
+                <h3 className="text-2xl font-bold text-red-600">
+                  {metrics.unhealthyScans}
+                </h3>
+                <p className="text-sm text-gray-400">
+                  {(
+                    (metrics.unhealthyScans / metrics.totalScans) *
+                    100
+                  ).toFixed(1)}
+                  % of total
+                </p>
+              </div>
+            </div>
           </div>
           <div className="p-4 bg-white shadow-md rounded-lg">
-            <h3 className="text-sm font-medium text-gray-700">
-              Daily Average Scans
-            </h3>
-            <p className="text-2xl font-semibold text-indigo-600">
-              {metrics.dailyAverageScans.toFixed(2)}
-            </p>
+            <div className="flex items-center">
+              <div className="p-3 rounded-full bg-yellow-100 text-yellow-600">
+                <svg
+                  className="h-8 w-8 text-yellow-500"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                  stroke="currentColor"
+                  fill="none"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  {" "}
+                  <path stroke="none" d="M0 0h24v24H0z" />{" "}
+                  <polyline points="21 12 17 12 14 20 10 4 7 12 3 12" />
+                </svg>
+              </div>
+              <div className="ml-4">
+                <p className="text-gray-500">Daily Average Scans</p>
+                <h3 className="text-2xl font-bold text-yellow-600">
+                  {metrics.dailyAverageScans.toFixed(2)}
+                </h3>
+                <p className="text-sm text-gray-400">
+                  {(
+                    (metrics.dailyAverageScans / metrics.totalScans) *
+                    100
+                  ).toFixed(1)}
+                  % of total
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
