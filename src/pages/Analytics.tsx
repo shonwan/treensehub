@@ -204,7 +204,7 @@ function Analytics() {
         <div className="grid grid-cols-4 gap-6 mt-4">
           <div className="p-4 bg-white shadow-md rounded-lg">
             <div className="flex items-center">
-              <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
+              <div className="p-3 rounded-full bg-indigo-100 text-indigo-600 mt-2">
                 <svg
                   className="w-8 h-8"
                   fill="none"
@@ -219,7 +219,7 @@ function Analytics() {
                   ></path>
                 </svg>
               </div>
-              <div className="ml-4">
+              <div className="ml-4 mt-1">
                 <p className="text-gray-500">Total Scans</p>
                 <h3 className="text-2xl font-bold text-indigo-600">
                   {metrics.totalScans}
