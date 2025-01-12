@@ -6,11 +6,23 @@ export interface ClassificationData {
     location: string;
   }
 
-  export  interface ProfileData {
-    id: string;
-    email: string | undefined;
-    created_at: string;
+  // export  interface ProfileData {
+  //   id: string;
+  //   email: string | undefined;
+  //   created_at: string;
+  // }
+
+  export interface ProfileData {
+    id: string; // UUID
+    email: string | undefined; // from auth.users
+    phone?: string;
+    address?: string;
+    first_name?: string;
+    last_name?: string;
+    date_of_birth?: string | null;
+    updated_at?: string;
   }
+  
 
 export interface ChartDataMap {
     [date: string]: { date: string; 
