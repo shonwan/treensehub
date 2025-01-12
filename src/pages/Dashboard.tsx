@@ -83,7 +83,7 @@ function Dashboard() {
             .gte('created_at', `${today}T00:00:00Z`)
             .lt('created_at', `${today}T23:59:59Z`)
             .order('created_at', { ascending: false })
-            .limit(5); // Fetch the 5 most recent activities for today
+            .limit(10); // Fetch the 10 most recent activities for today
 
           if (error) {
             throw error;
@@ -270,7 +270,7 @@ function Dashboard() {
         <div className="bg-white p-4 shadow-md rounded-lg mb-8">
           <div className="flex justify-between items-center">
             <h2 className="text-xl font-semibold text-gray-900">
-              Today's Activities
+              Recent Activities
             </h2>
             <button
               onClick={navigateToHistory}

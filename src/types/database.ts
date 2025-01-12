@@ -12,15 +12,6 @@ export interface ClassificationData {
     created_at: string;
   }
 
-  // export interface ProfileData {
-  //   id: string;
-  //   displayName: string;
-  //   email: string;
-  //   phone: string;
-  //   createdAt: string;
-  //   lastSignInAt: string;
-  // }
-  
 export interface ChartDataMap {
     [date: string]: { date: string; 
     Healthy: number;
