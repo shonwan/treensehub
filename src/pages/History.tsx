@@ -280,12 +280,12 @@ function History() {
           />
         </th>
         <th className="p-4 text-left table-cell-border">Image</th>
-        <th className="p-4 text-left cursor-pointer table-cell-border" onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>
-          Classification {sortOrder === 'asc' ? '↑' : '↓'}
+        <th className="p-4 text-left cursor-pointer table-cell-border" >
+          Classification 
         </th>
         <th className="p-4 text-left table-cell-border">Confidence</th>
         <th className="p-4 text-left table-cell-border">Location</th>
-        <th className="p-4 text-left table-cell-border">Date</th>
+        <th className="p-4 text-left table-cell-border" onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}>Date {sortOrder === 'asc' ? '↑' : '↓'}</th>
         <th className="p-4 text-left table-cell-border">Actions</th>
       </tr>
     </thead>
