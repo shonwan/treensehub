@@ -1,4 +1,6 @@
 export interface ClassificationData {
+    result: string;
+    confidence: string;
     id: string;
     classification: 'Healthy' | 'Unhealthy';
     created_at: string; // Ensure this matches your table's schema

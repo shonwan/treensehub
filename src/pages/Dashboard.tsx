@@ -291,8 +291,11 @@ function Dashboard() {
                   className="w-12 h-12 rounded-lg mr-4"
                 />
                 <div>
-                  <p className="text-sm text-gray-700">
+                  <p className="text-sm text-gray-700 font-bold">
                     {activity.classification}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Confidence: {(activity.confidence)}
                   </p>
                   <p className="text-xs text-gray-500">
                     {new Date(activity.created_at).toLocaleString()}
