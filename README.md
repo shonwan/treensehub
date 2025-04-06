@@ -1,49 +1,94 @@
-# TREENSE
-## Treensehub
+# 🌱 Treense Admin Website
 
-Currently, two official plugins are available:
+**Treense** is a falcata seedling health monitoring system that allows consumers to scan and classify seedlings as **healthy** or **unhealthy** using a mobile application. This repository contains the **admin web interface**, built to help administrators track, analyze, and manage classification data from users.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🌐 Website Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- 📊 **Dashboard** – Get live updates from app users scanning seedlings in the field.
+- 📂 **Hisoty** – Monitor all image classification results uploaded from the app.
+- 📍 **Analytics** – View health classification trends and daily scanning stats.
+- 👤 **Admin Profiles** – Secure login and editable admin profile pages.
+- ☁️ **Hosted on Vercel** – Ready for fast, scalable deployment.
 
-- Configure the top-level `parserOptions` property like this:
+---
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## 🛠️ Tech Stack
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **Frontend:** React + Vite + TailwindCSS  
+- **Backend:** Supabase (Database, Auth, Storage)  
+- **Deployment:** Vercel (Planned)  
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## ⚙️ Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/shonwan/treensehub.git
+   cd treensehub
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Set up environment variables**
+   - Create a `.env` file at the root
+   - Add the following:
+     ```env
+     VITE_SUPABASE_URL=your_supabase_url
+     VITE_SUPABASE_ANON_KEY=your_anon_key
+     ```
+
+4. **Start the development server**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🔐 Admin Authentication
+
+Admin accounts are manually added in the Supabase `users` table. Only verified admins can log in and access the dashboard.
+
+---
+
+## 🧪 Pages Overview
+
+| Page       | Description                                    |
+|------------|------------------------------------------------|
+| `/login`   | Secure admin login page                        |
+| `/dashboard` | View today's scans, healthy/unhealthy counts |
+| `/history` | All classification history with filters        |
+| `/analytics` | Charts and trends for health classifications |
+| `/profile` | Edit logged-in admin info                      |
+
+---
+
+## 🧠 About Treense
+
+Treense is built to address:
+- Misclassification of falcata seedlings by inexperienced consumers
+- Time-consuming health checks in large nurseries
+- Delays in identifying unhealthy seedlings
+
+By using MobileNetV2 image classification and a mobile-first approach, Treense empowers users to make smarter decisions—backed by real-time insights and reliable data.
+
+---
+
+## 📦 Future Plans
+
+- 🔔 Admin email notifications
+
+---
+
+## 📬 Contact
+
+For feedback, issues, or collaboration inquiries, email me at **pabualan.shennah227@gmail.com**
+
+---
+
+Let me know if you want this in your actual code/project repo!
