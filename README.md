@@ -7,7 +7,7 @@
 ## 🌐 Website Features
 
 - 📊 **Dashboard** – Get live updates from app users scanning seedlings in the field.
-- 📂 **Hisoty** – Monitor all image classification results uploaded from the app.
+- 📂 **History** – Monitor all image classification results uploaded from the app.
 - 📍 **Analytics** – View health classification trends and daily scanning stats.
 - 👤 **Admin Profiles** – Secure login and editable admin profile pages.
 - ☁️ **Hosted on Vercel** – Ready for fast, scalable deployment.
